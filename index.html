@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CrowdTelescope</title>
+</head>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+<script>
+    $(window).on('load', function(){  
+      $('#loader').hide();
+    });
+</script>
+
+<style>
+    body {
+        margin: 0;
+        font-family: sans-serif;
+        overflow: hidden;
+    }
+</style>
+
+
+
+<style>
+    #loder{
+        position: fixed; 
+        width: 100vw; 
+        height: 100vh; 
+        z-index: 999; 
+        opacity: 1;
+    }
+    .App {
+        text-align: center;
+    }
+
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+        height: 40vmin;
+    }
+
+    .App-header {
+        background-color: #282c34;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: calc(10px + 2vmin);
+        color: white;
+    }
+
+    .App-link {
+        color: #61dafb;
+    }
+
+    @keyframes App-logo-spin {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    body {
+        margin: 0;
+        background: #002C55;
+    }
+
+    .header {
+        /* height: 100px; */
+        height: 11vh;
+        background: #002C55;
+        display: flex;
+        color: #FFFFFF;
+        font-size: 2vh;
+        font-family: PingFangSC-Ultralight, sans-serif;
+        padding: 0 1.5vh;
+    }
+
+    .pc-header-container {
+        display: flex;
+        width: 100vw;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .mobile-header-container {
+        width: 100vw;
+        display: none;
+    }
+
+    .header-left {
+        display: flex;
+        align-items: center;
+    }
+
+    .header-right {
+        display: flex;
+        align-items: end;
+    }
+
+    .header-img {
+        height: 5vh;
+        width: auto;
+    }
+
+    .header-img2 {
+        margin-left: 1.5vh;
+        padding-right: 2vh;
+        height: 5vh;
+        width: auto;
+    }
+
+    /* .header-img3 {
+      height: 50px;
+      width: auto;
+    } */
+
+    .header-img3 {
+        height: 5vh;
+        width: auto;
+    }
+
+    .header-seperator {
+        border-left: 1px solid #FFFFFF;
+        width: 1px;
+        height: 5vh;
+        margin: 0 10px;
+    }
+
+    .pc-title-container {
+        width: 20vw;
+        /* display: none; */
+    }
+
+    .scroll {
+        width: 70vw;
+        height: 10px;
+        background: rgb(151, 167, 196);
+        position: relative;
+    }
+
+    .bar {
+        width: 10px;
+        height: 20px;
+        background: #369;
+        position: absolute;
+        top: -5px;
+        left: 8.75vw;
+        cursor: pointer;
+        border-radius: 20%;
+    }
+
+    .mask {
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: #369;
+        width: 8.75vw;
+        height: 10px;
+    }
+
+    .btn-add,
+    .btn-sub {
+        width: 1.5rem;
+        height: 1.5rem;
+        border: 1px solid gray;
+        background: linear-gradient(currentColor, currentColor) no-repeat center/.875em 2px,
+            linear-gradient(currentColor, currentColor) no-repeat center/2px .875em,
+            ghostwhite;
+        color: dimgray;
+    }
+    .btn-add:hover{
+        background-color: #BABABA;
+    }
+
+    .btn-sub:hover{
+        background-color: #BABABA;
+    }
+
+    .btn-sub {
+        background-size: .875em 2px, 0;
+    }
+
+    .privacy_statement{
+        font-size: 14px;
+    }
+    
+    .footer-center{
+        width: 40vw;
+        right: 5vw;
+        display: flex;
+    }
+    .btn_add_sub{
+        right: 1vw;
+    }
+
+    .main-container{
+        position: relative; 
+        width: 100vw; 
+        height: calc( 89vh - 120px );
+    }
+    
+    @media (max-width: 1128px) {
+
+        .header-left,
+        .header-right {
+            display: inline-flex;
+            align-items: center;
+            /* height: 100vh; */
+        }
+
+        /* .header-right {
+    position: absolute;
+    right: 35px;
+  } */
+        /* .pc-header-container {
+    display: flex;
+    justify-content: space-between;
+  } */
+        .header-img {
+            height: 50px;
+        }
+
+        .header-img2,
+        .header-img3 {
+            height: 5vh;
+            width: auto;
+            /* padding-right: 20px; */
+        }
+
+        /* .header-img4 {
+        height: 30px;
+      } */
+
+        .header-seperator {
+            height: 40px;
+        }
+
+        .header-title1 {
+            font-size: 3vh !important;
+        }
+
+
+
+        .footer-center {
+            display: none;
+        }
+
+        .footer-right {
+            display: none;
+        }
+    }
+
+    @media (max-width: 996px) {
+
+        /* .pc-header-container {
+    display: flex;
+    justify-content: space-between;
+  } */
+        .pc-header-container,
+
+        .footer-right {
+            display: none;
+        }
+        .header-title2 {
+            display: none;
+        }
+        .footer-center{
+            display: none;
+        }
+
+        .mobile-header-container {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .mobile-images-container {
+            display: flex;
+            align-items: center;
+        }
+        .mobile-header-title1{
+            font-size: 4vh;
+        }
+
+        .header {
+            height: 11vh;
+            padding: 0 1.5vh;
+        }
+
+        .header-img,
+        .header-img2,
+        .header-img3
+
+        /* .header-img4  */
+            {
+            margin: 0;
+            /* padding: 0 10px; */
+        }
+
+        .header-img {
+            height: 44px;
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+
+        .header-img2,
+        .header-img3 {
+            height: 5vh;
+            width: auto;
+        }
+        
+
+        .header-title1 {
+            font-size: 3vh !important;
+        }
+
+        .header-title1 {
+            line-height: 1 !important;
+        }
+
+    }
+
+    @media (max-width: 616px) {
+        body {
+            overflow: hidden;
+        }
+
+        .main-container{
+            position: relative; 
+            width: 100vw; 
+            height: 89vh;
+        }
+
+        .header-title2 {
+            display: none;
+        }
+        .footer {
+            display: none;
+        }
+
+        .header {
+            /* padding: 1vh 2vw; */
+            /* align-items: center; */
+        }
+
+        .header-img2,
+        .header-img3 {
+            height: 5vh;
+            width: auto;
+        }
+
+
+        .mobile-title-container {
+            left: 5vw;
+        }
+
+
+        .header-title1 {
+            font-size: 3vh !important;
+        }
+    }
+
+
+    .title-container {
+        /* flex-wrap: wrap; */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .header-link {
+        height: 5vh;
+        color: #FFFFFF;
+        text-decoration: none;
+    }
+
+    .header-text {
+        font-family: PingFangHK-Regular, sans-serif;
+        color: #FFFFFF;
+        text-decoration: none;
+    }
+
+    .header-title1 {
+        font-size: 3vh;
+        /* line-height: 1.3; */
+    }
+
+    .header-title2 {
+        font-size: 1.2vh;
+    }
+
+
+    .footer {
+      height: 120px;
+      width: 100%;
+      background: #002C55;
+      /* position: absolute; */
+      bottom: 0;
+    }
+
+    .footer-container {
+      padding: 16px 30px 0 30px;
+      /* text-align: center; */
+      color: #FFFFFF;
+      font-size: 16px;
+      font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+      border-top: 4px solid #FFD054;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .footer-left {
+      /* display: flex; */
+    }
+
+    .footer-title {
+      padding: 10px;
+      font-size: 26px;
+      font-weight: bold;
+      width: 280px;
+      line-height: 1.3;
+      /* margin-top: 20px; */
+    }
+
+    .footer-text {
+      font-family: PingFangHK-Ultralight, sans-serif;
+      font-size: 12px;
+      color: #BABABA;
+      margin: 3px 0 0 10px ;
+    }
+
+    .footer-right {
+      width: 15vw;
+    }
+
+    .footer-sub-title {
+      font-family: PingFangHK-Ultralight, sans-serif;
+      font-weight: bolder;
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.61);
+    }
+
+    .links-container {
+      display: flex; 
+      /* flex-wrap: wrap;
+      /* justify-content: space-between; */
+    }
+
+    .footer-link {
+      /* font-family: PingFangHK-Ultralight, sans-serif; */
+      font-size: 16px;
+      display: flex;
+      flex-direction: column;
+      /* margin-right: 40px; */
+      color: #FFFFFF;
+      text-decoration: none;
+    }
+
+    .copyright {
+      font-size: 12px;
+      color: #BABABA;
+      position: absolute;
+      right: 30px;
+      bottom: 8px;
+    }
+
+    @media (min-width: 1276px) {
+      .links-container {
+        /* display: flex !important; */
+        /* justify-content: space-between; */
+      }
+
+      .footer-link {
+        /* margin-right: 40px !important; */
+        font-size: 14px;
+      }
+
+      .footer-link::after {
+        display: none !important;
+      }
+    }
+
+    @media (min-width: 978px) {
+      .links-container {
+        display: block;
+        line-height: 1.3;
+        /* justify-content: space-between; */
+      }
+
+      .footer-link {
+        margin: 0;
+        font-size: 8px ;
+      }
+
+      .footer-link:last-of-type::after {
+        content: ""
+      }
+    }
+</style>
+<body>
+    <div id="loader"  style=" position: relative; width: 100vw; height: 100vh;  opacity: 1; display:flex; align-items:center;">
+        <div style="margin-left: 30vw;  ">
+            <img style="width: 20vw;" src="./img/umac.png" >
+            <img style="width: 20vw;" src="./img/iotsc.png" >
+        </div>
+    </div>
+
+    <div style="height: 100vh; width: 100vw;">
+        <div class="header" style="animation: 1000ms ease 0s 1 normal forwards running header-slide-down;">
+            <div class="pc-header-container">
+                <div class="header-left"><a href="https://www.um.edu.mo/" target="_blank"><img class="header-img"
+                            src="./img/umac.png"  alt="University of Macau Logo"></a>
+                    <div class="header-seperator"></div>
+                    <div class="pc-title-container">
+                        <div class="title-container"><a class="header-text header-title1">CrowdTelescope</a>
+                            <a class="header-text header-title2" target="_blank">Wi-Fi-Positioning-Based Multi-Grained
+                                Spatiotemporal Crowd Flow Prediction for Smart Campus</a>
+                                <!-- <a class="header-text header-title2">for Smart Campus</a> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="header-right"><a href="https://www.fst.um.edu.mo/" target="_blank"><img class="header-img2"
+                            src="./img/fst.png"></a><a href="https://skliotsc.um.edu.mo/" target="_blank"><img
+                            class="header-img3" src="./img/iotsc.png"></a>
+                </div>
+            </div>
+            <div class="mobile-header-container">
+                <div class="mobile-images-container"><a href="https://www.um.edu.mo/" target="_blank"><img
+                            class="header-img2" src="./img/UM_logo_horizontal-2.png" 
+                            alt="University of Macau Logo"></a><a href="https://www.fst.um.edu.mo/" target="_blank"><img
+                            class="header-img2" src="./img/fst.png"></a>
+                            <img class="header-img2" src="./img/iotsc.png"></a>
+                </div>
+                <div class="mobile-title-container">
+                    <p class="header-text mobile-header-title1" >
+                        CrowdTelescope</a>
+                </div>
+            </div>
+        </div>
+        <!-- <div style="position: relative; width: 100vw; height: 74vh;"> -->
+        <div id="loaded" class="main-container">
+            <div id="map"></div>
+            <div style=" position: absolute; bottom:2vh; text-align: center; ">
+                <div >
+                    <div>
+                        <div style="position: relative; left: -2.5vh; width: 100vw; display: flex; justify-content: center;">
+                            <p style=" font-size: 3vh; color: rgb(0, 0, 0); display: inline;">
+                                Time:
+                            </p>
+                            <p id="clock"
+                                style=" font-size: 3vh; width: 3vh; color: rgb(0, 0, 0); display: inline; ">
+                                06:00
+                            </p>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; position: relative; margin-top:-3vh;">
+                        <div class="scroll" id="scroll" style="display: inline-block;">
+                            <div class="bar" id="bar">
+                            </div>
+                            <div class="mask" id="mask"></div>
+                        </div>
+
+                    </div>
+                    <div style="text-align: center;">
+                        <button id='btnStart' style="font-size: 1.5vmin; " onclick="startdisplay()">Start</button>
+                        <button style="font-size: 1.5vmin; " onclick="pause()">Pause</button>
+                    </div>
+                </div>
+            </div>
+            <div class="btn_add_sub" style="position: absolute; right: 2vw; bottom: 2vh; display: inline-flex; flex-direction: column;">
+                <button class="btn-add" onclick="zoomin()"></button>
+                <button class="btn-sub" onclick="zoomout()"></button>
+            </div>
+        </div>
+        <div class="footer" style="animation: 1000ms ease 0s 1 normal forwards running footer-slide-up; ">
+            <div class="footer-container">
+                <div class="footer-left">
+                    <div class="footer-title">University of Macau</div>
+                    <div class="footer-text">Copyright ©2022 University of Macau</div>
+                </div>
+                <div class="footer-center" >
+                    <p class="privacy_statement"> The connection records of WiFi access points imply comprehensive yet noisy human mobility on campus. 
+                        CrowdTelescope is built to robustly extract and subtly model on-campus mobility traces from such records, 
+                        providing decision support as a smart campus application.</p>
+                </div>
+                <div class="footer-right">
+                    <div class="footer-sub-title">Quick Links</div>
+                    <div class="links-container"><a href="https://www.um.edu.mo/" class="footer-link" target="_blank">UM
+                            Home</a><a href="https://www.fst.um.edu.mo/" class="footer-link" target="_blank">Faculty of
+                            Science and
+                            Technology</a><a href="https://skliotsc.um.edu.mo/" class="footer-link"
+                            target="_blank">State Key
+                            Laboratory of IOTSC</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <link href='./css/mapbox-gl.css' rel='stylesheet' />
+    <script src='./js/mapbox-gl.js'></script>
+    <script src="./js/l7.js"></script>
+    <script src="./js/wifi.js"></script>
+    <script src="./js/newdata.js"></script>
+    <script src="./js/newdata1.js"></script>
+    <script src="./js/newdata2.js"></script>
+    <script src="./js/number.js"></script>
+    <script src="./js/control.js"></script>
+</body>
+</html>
